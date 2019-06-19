@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>Psychic Game</title>
+</head>
+<body>
+	
+	
+	<div id="game">
+		<h1> The Psychic Game </h1>
+		<h4><p>Guess What Letter I'm Thinking Of!</p></h4>
+		<p>Wins:</p>
+		<p>Losses:</p>
+		<p>Guesses Left:</p>
+		<p>Your Guesses So Far:</p>
+	</div>
+
+	<!-- Javascript is building the variables of computer choices, wins, losses and number of guesses. Also, on the event of the key up, the computer will randomly choose a letter from the var options and match it up against the user choice.-->
+	
+	<script type="text/javascript">
+		
+		 var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+
+		 var wins = 0;
+		 var losses = 0;
+		 var numGuesses = 9;
+		 var guessChoices = [];
+
+		 document.onkeyup = function(event) {
+
+		var userGuess = event.key;
+
+		var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+		var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+		 	
+	// This area is the computation of the wins, losses and draws. If the user guess is equal (triple equal or "===" means that the type and value have to the same) to the randomly selected letter by the computer, then the user will win the game. If the user guess is not equal (!= is the symbol for not equal) to the randomly selected letter by the computer, then the user will lose number of guesses left (starting from nine and go down to zero). If the user does not guess the randomly selected letter with all the number of guesses remaining, then the user will lose and the computer will win the game.	
+
+	if (options.indexOf(userGuess) > -1) {
+
+		if (userGuess === computerGuess) {
+			wins++;
+			numGuesses = 9;
+			guessChoices = [];
+		}
+
+	if (userGuess != computerGuess) {
+			numGuesses --;
+			guessChoices.push(userGuess)
+		}
+
+	if (numGuesses === 0) {
+			numGuesses = 9;
+			losses ++;
+			guessChoices = [];
+		
+		}
+
+	// This area is the "scoreboard" of "The Psychic Game". If a user wins or loses, the 'var html' will add the number of wins or losses. Also, the scoreboard will calculate the number of guesses left if the user incorrectly answers the computer's randomly selected letter. The "guesschoices.join" function displays the letters selected for which the user can use to narrow down which letter not to pick if answered incorrectly. The query selector below logs/stores the inputs that the user selects to guess the computer's randomly generated number. Once the randomly generated letter is guessed and the user wins the game (or loses), the game returns at the beginning with the number of guesses remaining at nine.
+
+	var html = 
+		"<h1> The Psychic Game </h1>" +
+		"<p>Guess what letter I'm thinking of!</p>" +
+		"<p>Wins: " + wins + "</p>" +
+		"<p>Losses: " + losses + "</p>" +
+		"<p>Guesses Left: " + numGuesses + "</p>" +
+		"<p>Your Guesses so far: " + guessChoices.join(", ") + "</p>";
+
+		document.querySelector("#game").innerHTML = html;
+				
+			}
+		};
+
+	</script>
+
+</body>
+</html>
